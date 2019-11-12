@@ -13,7 +13,7 @@ const MTGCard = ({ imgurl, artist, setName, originalType, name }) => {
   const handleClose = () => { setAnchorEl(null); };
   return (
     <GridListTile
-      style={{ width: 223, height: 310 }}
+      style={{ width: 223, height: 310, margin: 10 }}
     >
       <img alt={name} src={imgurl} />
       <GridListTileBar
@@ -44,7 +44,7 @@ const MTGCard = ({ imgurl, artist, setName, originalType, name }) => {
           {name}<br />
           {originalType}<br />
           {setName}<br />
-          {artist}<br />
+          Artist: {artist}<br />
         </Typography>
       </Popover>
     </GridListTile>
