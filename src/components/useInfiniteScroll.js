@@ -7,7 +7,10 @@ import axios from 'axios';
 let cancel;
 
 // A custom hook that both handles the initial API load and the infinite
-// scrolling, since it relies so heavily on previously mentioned API call.
+// scrolling, since it relies so heavily on previously mentioned API call. I
+// also learned - the hard way - to implement axios' cancel token to stop any
+// previous API calls if we're doing real time searching.
+
 // TODO - separate the API call from the infinite scrolling
 
 const useInfiniteScroll = () => {
