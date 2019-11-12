@@ -1,4 +1,5 @@
 # highspot-homework
+![image](https://user-images.githubusercontent.com/33945/68713648-59d59d80-056c-11ea-8c4c-06e6190cf42c.png)
 
 I've only been playing around with React for the past couple of weeks, so I figured this was a good opportunity to use React to implement the assignment. Given that I'm relatively new to React, I'm probably one of the minority to learn React Hooks before the standard class-based components. On the plus side, easier for me to understand. On the minus, there seems to be a lot of uncharted territory, especially in regards to the way testing hooks are done.
 
