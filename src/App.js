@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import GridList from '@material-ui/core/GridList';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import axios from 'axios';
+import MenuBar from './components/MenuBar.js'
 import MTGCard from './components/MTGCard.js'
 import useInfiniteScroll from './components/useInfiniteScroll.js'
 
@@ -14,29 +13,15 @@ import './App.css';
 // isn't ideal.
 
 function App() {
-  const [feedData, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loadMore, setLoadMore] = useInfiniteScroll(loadMoreCallback);
 
-  function loadMoreCallback() {
-    console.log('loadMoreCallback', loadMore)
-    setPage(p => p + 1);
-  }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(
-        `https://api.magicthegathering.io/v1/cards?type=Creature&pageSize=20&page=${page}`
-      );
-      // console.log('page ' + page)
-      setData(prevData => [...prevData, ...result.data.cards]);
-      setLoadMore(false);
-    };
-    fetchData();
-  }, [setLoadMore, page]);
+  const { loadMore, isFirstLoad, feedData } = useInfiniteScroll();
 
   return (
     <div className="App">
+      <MenuBar
+        loadMore={loadMore}
+        isFirstLoad={isFirstLoad}
+      >
       <div style={{
         display: 'flex',
         flexWrap: 'wrap',
@@ -57,7 +42,7 @@ function App() {
           ))}
         </GridList>
       </div>
-      {loadMore && <CircularProgress />}
+      </MenuBar>
     </div>
   );
 }
