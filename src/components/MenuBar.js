@@ -15,6 +15,12 @@ import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import Container from '@material-ui/core/Container';
+
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
 
@@ -51,6 +57,10 @@ const useStyles = makeStyles(theme => ({
   },
   drawerPaper: {
     width: DRAWER_WIDTH,
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -95,14 +105,14 @@ const useStyles = makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -DRAWER_WIDTH,
+    marginLeft: 0,
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
-    marginLeft: 0,
+    marginLeft: +DRAWER_WIDTH,
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 7),
@@ -117,8 +127,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MenuBar = ({children, loadMore, isLoading, searchTerms}) => {
+const MenuBar = ({children, loadMore, isLoading, searchTerms, sortType, sortTypeHandler}) => {
   const classes = useStyles();
+
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
@@ -167,7 +184,51 @@ const MenuBar = ({children, loadMore, isLoading, searchTerms}) => {
           </div>
         </Toolbar>
       </AppBar>
-      {children}
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
+            Sort by
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-outlined-label"
+            id="demo-simple-select-outlined"
+            value={sortType}
+            onChange={sortTypeHandler}
+            labelWidth={labelWidth}
+          >
+            <MenuItem value={'name'}>Name</MenuItem>
+            <MenuItem value={'artist'}>Artist</MenuItem>
+            <MenuItem value={'setName'}>Collection</MenuItem>
+            <MenuItem value={'originalType'}>Creature Type</MenuItem>
+          </Select>
+        </FormControl>
+
+
+      </Drawer>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
+        <div className={classes.drawerHeader} />
+        <Container>
+        {children}
+        </Container>
+      </main>
     </>
   )
 }

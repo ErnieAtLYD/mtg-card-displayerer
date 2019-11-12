@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import mockData from '../mockData'
 
 let cancel;
 
@@ -37,13 +38,18 @@ const useInfiniteScroll = () => {
       let term = (searchTerm !== '') ? `&name=${searchTerm}` : '';
 
       try {
-        const result = await axios(
-          `https://api.magicthegathering.io/v1/cards?type=Creature${term}&pageSize=20&page=${page}`,
-          {cancelToken: cancel.token}
-        );
-        if (result.status === 200) {
-          setData(prevData => [...prevData, ...result.data.cards]);
-        }
+        // const result = await axios(
+        //   `https://api.magicthegathering.io/v1/cards?type=Creature${term}&pageSize=20&page=${page}`,
+        //   {cancelToken: cancel.token}
+        // );
+        // if (result.status === 200) {
+        //   setData(prevData => [...prevData, ...result.data.cards]);
+        // }
+
+        // FIXME - comment this out when it's time to use real server
+        setData(mockData.cards);
+
+
       } catch (error) {
         throw error;
       } finally {

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import GridList from '@material-ui/core/GridList';
 import MenuBar from './components/MenuBar.js'
 import MTGCard from './components/MTGCard.js'
 import useInfiniteScroll from './components/useInfiniteScroll.js'
-
+import _ from 'lodash';
 import './App.css';
 
 // NOTE:
@@ -15,11 +15,16 @@ import './App.css';
 function App() {
 
   const { loadMore, isLoading, feedData, setSearchTerm } = useInfiniteScroll();
+  const [ sortType, setSortType ] = useState('name')
 
   const searchTerms = event => {
     // console.log('ping', event.target.value)
     setSearchTerm(event.target.value);
   }
+
+  const sortTypeHandler = event => {
+    setSortType(event.target.value);
+  };
 
   return (
     <div className="App">
@@ -27,6 +32,8 @@ function App() {
         loadMore={loadMore}
         isLoading={isLoading}
         searchTerms={searchTerms}
+        sortType={sortType}
+        sortTypeHandler={sortTypeHandler}
       >
       <div style={{
         display: 'flex',
@@ -35,7 +42,7 @@ function App() {
         overflow: 'hidden'
       }}>
         <GridList>
-          {feedData.map(tile => (
+          {_.sortBy(feedData, sortType).map(tile => (
             tile.multiverseid &&
             <MTGCard
               key={tile.multiverseid}

@@ -9,9 +9,9 @@ Here are the basic design parameters for this exercise:
  - [x] Use a responsive design. The cards should reflow as-needed based on the size of the browser window. You may limit the maximum display area but may not use a fixed width.
  - [x] As the user scrolls down the page, additional cards should be loaded and appended. (This method of displaying results is often referred to as "infinite scroll.")
  - [x] Include a page header. You may also include additional layout elements at your discretion.
- - [...] Display a loading indicator when communicating with the API.
+ - [x] Display a loading indicator when communicating with the API.
  - Once your basic design is working, add these additional features (you get to decide all the details):
-   - [ ] Search (at a minimum, by the card's name)
+   - [x] Search (at a minimum, by the card's name)
    - [ ] Sort (card name, set, artist, etc.)
 
 Implementation Requirements
@@ -33,10 +33,16 @@ Is this all too easy, or not sufficient to show off your dev skills? No problem!
  - Add cards to a list or collection (e.g., build a deck)
 
 
+
+
 Things I learned during this project
 - Custom hooks
 - Unit testing around said hooks
+- How to bypass CORS stuff
 
+```
+open -a Google\ Chrome --args --disable-web-security --user-data-dir
+```
 
 Tricky things
 
