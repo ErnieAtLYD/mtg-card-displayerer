@@ -117,7 +117,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const MenuBar = ({children, loadMore, isFirstLoad}) => {
+const MenuBar = ({children, loadMore, isLoading, searchTerms}) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -137,7 +137,7 @@ const MenuBar = ({children, loadMore, isFirstLoad}) => {
           [classes.appBarShift]: open,
         })}
       >
-        {(loadMore || isFirstLoad) && <LinearProgress />}
+        {(loadMore || isLoading) && <LinearProgress />}
         <Toolbar>
           <IconButton
             edge="start"
@@ -161,6 +161,7 @@ const MenuBar = ({children, loadMore, isFirstLoad}) => {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              onChange={searchTerms}
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>

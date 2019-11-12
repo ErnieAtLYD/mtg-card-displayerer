@@ -7,7 +7,8 @@ const useInfiniteScroll = () => {
   const [feedData, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [loadMore, setLoadMore] = useState(false);
-  const [isFirstLoad, setFirstLoad] = useState(true);
+  const [isLoading, setFirstLoad] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,9 +34,11 @@ const useInfiniteScroll = () => {
       }
       cancel = axios.CancelToken.source();
 
+      let term = (searchTerm !== '') ? `&name=${searchTerm}` : '';
+
       try {
         const result = await axios(
-          `https://api.magicthegathering.io/v1/cards?type=Creature&pageSize=20&page=${page}`,
+          `https://api.magicthegathering.io/v1/cards?type=Creature${term}&pageSize=20&page=${page}`,
           {cancelToken: cancel.token}
         );
         if (result.status === 200) {
@@ -48,10 +51,16 @@ const useInfiniteScroll = () => {
         setFirstLoad(false);
       }
     };
-    fetchData();
-  }, [page]);
 
-  return {loadMore, isFirstLoad, feedData};
+    setFirstLoad(true)
+    if (!loadMore && searchTerm !== '') {
+      setData([]);
+      setPage(1);
+    }
+    fetchData();
+  }, [page, searchTerm]);
+
+  return {loadMore, isLoading, feedData, setSearchTerm};
 };
 
 export default useInfiniteScroll;

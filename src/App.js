@@ -14,13 +14,19 @@ import './App.css';
 
 function App() {
 
-  const { loadMore, isFirstLoad, feedData } = useInfiniteScroll();
+  const { loadMore, isLoading, feedData, setSearchTerm } = useInfiniteScroll();
+
+  const searchTerms = event => {
+    // console.log('ping', event.target.value)
+    setSearchTerm(event.target.value);
+  }
 
   return (
     <div className="App">
       <MenuBar
         loadMore={loadMore}
-        isFirstLoad={isFirstLoad}
+        isLoading={isLoading}
+        searchTerms={searchTerms}
       >
       <div style={{
         display: 'flex',
