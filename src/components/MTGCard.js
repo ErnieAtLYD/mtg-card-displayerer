@@ -6,6 +6,9 @@ import InfoIcon from '@material-ui/icons/Info';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 
+// The actual MTG card component. Shows the image, and then any of the metadata
+// is shown on a Material UI Popover.
+
 const MTGCard = ({ imgurl, artist, setName, originalType, name }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);

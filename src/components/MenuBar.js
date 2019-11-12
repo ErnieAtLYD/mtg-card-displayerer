@@ -10,20 +10,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
-
-import Drawer from '@material-ui/core/Drawer';
-import Divider from '@material-ui/core/Divider';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Container from '@material-ui/core/Container';
 
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import { fade, makeStyles } from '@material-ui/core/styles';
 
-import { fade, makeStyles, useTheme } from '@material-ui/core/styles';
+import Sidebar from './Sidebar';
 
+// TODO - constants file
 const DRAWER_WIDTH = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -44,23 +37,12 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  drawer: {
-    width: DRAWER_WIDTH,
-    flexShrink: 0,
-  },
   drawerHeader: {
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
-  },
-  drawerPaper: {
-    width: DRAWER_WIDTH,
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -127,24 +109,20 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+// Component that builds the top AppBar, which includes a search box to enter terms.
+// I decided to use whatever is in the search box and incorporate that into the REST
+// query, rather than getting all the cards and filtering it by term. To be it seems
+// like how someone that would use an app like this would expect it.
 const MenuBar = ({children, loadMore, isLoading, searchTerms, sortType, sortTypeHandler}) => {
   const classes = useStyles();
-
-  const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
-  React.useEffect(() => {
-    setLabelWidth(inputLabel.current.offsetWidth);
-  }, []);
-
-  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
   return (
     <>
       <CssBaseline />
@@ -184,41 +162,12 @@ const MenuBar = ({children, loadMore, isLoading, searchTerms, sortType, sortType
           </div>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
+      <Sidebar
         open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <FormControl variant="outlined" className={classes.formControl}>
-          <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
-            Sort by
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-outlined-label"
-            id="demo-simple-select-outlined"
-            value={sortType}
-            onChange={sortTypeHandler}
-            labelWidth={labelWidth}
-          >
-            <MenuItem value={'name'}>Name</MenuItem>
-            <MenuItem value={'artist'}>Artist</MenuItem>
-            <MenuItem value={'setName'}>Collection</MenuItem>
-            <MenuItem value={'originalType'}>Creature Type</MenuItem>
-          </Select>
-        </FormControl>
-
-
-      </Drawer>
+        sortType={sortType}
+        sortTypeHandler={sortTypeHandler}
+        handleDrawerClose={handleDrawerClose}
+      />
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
@@ -226,7 +175,7 @@ const MenuBar = ({children, loadMore, isLoading, searchTerms, sortType, sortType
       >
         <div className={classes.drawerHeader} />
         <Container>
-        {children}
+          {children}
         </Container>
       </main>
     </>

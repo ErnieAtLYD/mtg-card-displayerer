@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import mockData from '../mockData'
+
+// comment this out when it's time to use real server
+// import mockData from '../mockData'
 
 let cancel;
+
+// A custom hook that both handles the initial API load and the infinite
+// scrolling, since it relies so heavily on previously mentioned API call.
+// TODO - separate the API call from the infinite scrolling
 
 const useInfiniteScroll = () => {
   const [feedData, setData] = useState([]);
@@ -38,17 +44,17 @@ const useInfiniteScroll = () => {
       let term = (searchTerm !== '') ? `&name=${searchTerm}` : '';
 
       try {
-        // const result = await axios(
-        //   `https://api.magicthegathering.io/v1/cards?type=Creature${term}&pageSize=20&page=${page}`,
-        //   {cancelToken: cancel.token}
-        // );
-        // if (result.status === 200) {
-        //   setData(prevData => [...prevData, ...result.data.cards]);
-        // }
+        // comment out below if we need to use stubbed data (don't hammer the API)
+        const result = await axios(
+          `https://api.magicthegathering.io/v1/cards?type=Creature${term}&pageSize=20&page=${page}`,
+          {cancelToken: cancel.token}
+        );
+        if (result.status === 200) {
+          setData(prevData => [...prevData, ...result.data.cards]);
+        }
 
-        // FIXME - comment this out when it's time to use real server
-        setData(mockData.cards);
-
+        // comment this out when it's time to use real server
+        // setData(mockData.cards);
 
       } catch (error) {
         throw error;

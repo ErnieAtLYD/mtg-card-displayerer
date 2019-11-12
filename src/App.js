@@ -12,13 +12,15 @@ import './App.css';
 // from the API level. I'll need to filter on the component level instead, which
 // isn't ideal.
 
+// TODO - when sorting all cards by artist, collection or creature type, group
+// them appropriately and give group headers.
+
 function App() {
 
   const { loadMore, isLoading, feedData, setSearchTerm } = useInfiniteScroll();
   const [ sortType, setSortType ] = useState('name')
 
   const searchTerms = event => {
-    // console.log('ping', event.target.value)
     setSearchTerm(event.target.value);
   }
 
