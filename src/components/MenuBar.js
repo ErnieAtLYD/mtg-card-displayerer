@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -180,6 +182,14 @@ const MenuBar = ({children, loadMore, isLoading, searchTerms, sortType, sortType
       </main>
     </>
   )
+}
+MenuBar.propTypes = {
+  children: PropTypes.element.isRequired,
+  loadMore: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  searchTerms: PropTypes.func,
+  sortType: PropTypes.string,
+  sortTypeHandler: PropTypes.func
 }
 
 export default MenuBar;

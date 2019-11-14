@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
@@ -78,6 +80,13 @@ const Sidebar = ({ open, sortType, sortTypeHandler, handleDrawerClose }) => {
       </FormControl>
     </Drawer>
   )
+}
+
+Sidebar.propTypes = {
+  open: PropTypes.func,
+  sortType: PropTypes.string,
+  sortTypeHandler: PropTypes.func,
+  handleDrawerClose: PropTypes.func
 }
 
 export default Sidebar;
