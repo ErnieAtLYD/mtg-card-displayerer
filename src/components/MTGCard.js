@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
@@ -52,6 +54,13 @@ const MTGCard = ({ imgurl, artist, setName, originalType, name }) => {
       </Popover>
     </GridListTile>
   )
+}
+MTGCard.propTypes = {
+  imgurl: PropTypes.string,
+  artist: PropTypes.string,
+  setName: PropTypes.string,
+  originalType: PropTypes.string,
+  name: PropTypes.string
 }
 
 export default MTGCard;
