@@ -146,7 +146,7 @@ const MenuBar = ({children, loadMore, isLoading, searchTerms, sortType, sortType
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Highspot Assignment
+            M:TG Card Displayer
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
